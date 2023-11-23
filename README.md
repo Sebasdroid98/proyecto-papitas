@@ -38,7 +38,7 @@
 - [ ] DB_PASSWORD=pass
 
 ## Se ejecutan las migraciones
-- [] php artisan migrate
+- [ ] php artisan migrate
 
 ## License (English - Ingles)
 
