@@ -28,3 +28,6 @@ DB_PASSWORD=pass
 
 // Se ejecutan las migraciones
 php artisan migrate
+
+// Se crea modelo, migracion y controlador
+php artisan make:model Nombre_modelo -mc

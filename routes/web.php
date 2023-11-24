@@ -1,5 +1,7 @@
 <?php
 
+use App\Custom\Queries\Empleado;
+use App\Http\Controllers\EmpleadoController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
@@ -21,10 +23,15 @@ Route::middleware('auth')->group(function () {
     });
 });
 
-Route::middleware('auth')->group(function () {
-    Route::get('/datos', function () {
-        return DB::select("SELECT * FROM EMPLEADOS");
-    });
+// Route::middleware('auth')->group(function () {
+//     Route::get('/datos', function () {
+//         // return DB::select("SELECT * FROM EMPLEADOS");
+//         return (new Empleado)->getListaEmpleados();
+//     });
+// });
+
+Route::controller(EmpleadoController::class)->group(function () {
+    Route::get('empleados.index', 'index');
 });
 
 require __DIR__.'/auth.php';
