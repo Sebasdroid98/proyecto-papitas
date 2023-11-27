@@ -31,3 +31,6 @@ php artisan migrate
 
 // Se crea modelo, migracion y controlador
 php artisan make:model Nombre_modelo -mc
+
+// Crear request
+php artisan make:request MiRequest

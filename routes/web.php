@@ -18,9 +18,9 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-    Route::get('/datos', function () {
-        return DB::select("SELECT * FROM EMPLEADOS");
-    });
+    // Route::get('/datos', function () {
+    //     return DB::select("SELECT * FROM EMPLEADOS");
+    // });
 });
 
 // Route::middleware('auth')->group(function () {
@@ -31,7 +31,11 @@ Route::middleware('auth')->group(function () {
 // });
 
 Route::controller(EmpleadoController::class)->group(function () {
-    Route::get('empleados.index', 'index');
+    Route::get('empleados.index', 'index')->name('empleados.index');
+    Route::get('empleados.edit/{id}', 'edit');
+    // Route::get('empleados.delete/{id}', 'delete');
+    Route::put('empleados.update/{id}', 'update')->name('empleados.update');
+    Route::post('empleados.store', 'store')->name('empleados.store');
 });
 
 require __DIR__.'/auth.php';
