@@ -1,3 +1,7 @@
+-- Alter session set "_ORACLE_SCRIPT"=true;
+-- Create user topicos_dba identified by "123456";
+-- Grant "CONNECT" to topicos_dba;
+
 -- Tabla Empleados
 CREATE TABLE Empleados (
     Emp_Id NUMBER PRIMARY KEY,

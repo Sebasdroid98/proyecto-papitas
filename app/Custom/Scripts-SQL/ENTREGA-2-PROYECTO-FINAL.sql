@@ -403,6 +403,203 @@ CREATE OR REPLACE PACKAGE BODY VENTAS_CRUD_PKG AS
 
 END VENTAS_CRUD_PKG;
 
+-- Se define el paquete "ProveedorPaquete"
+CREATE OR REPLACE PACKAGE ProveedorPaquete AS
+
+    PROCEDURE InsertarProveedor(
+        p_id_proveedor NUMBER,
+        p_nombre VARCHAR2,
+        p_direccion VARCHAR2,
+        p_telefono VARCHAR2
+    );
+
+    PROCEDURE ActualizarProveedor(
+        p_id_proveedor NUMBER,
+        p_nombre VARCHAR2,
+        p_direccion VARCHAR2,
+        p_telefono VARCHAR2
+    );
+
+    PROCEDURE EliminarProveedor(p_id_proveedor NUMBER);
+
+    FUNCTION ObtenerDetalleProveedor(p_id_proveedor NUMBER) RETURN SYS_REFCURSOR;
+END ProveedorPaquete;
+
+-- Cuerpo del paquete "ProveedorPaquete"
+CREATE OR REPLACE PACKAGE BODY ProveedorPaquete AS
+
+    PROCEDURE InsertarProveedor(
+        p_id_proveedor NUMBER,
+        p_nombre VARCHAR2,
+        p_direccion VARCHAR2,
+        p_telefono VARCHAR2
+    ) IS
+    BEGIN
+        INSERT INTO Proveedores (ID_Proveedor, Nombre, Direccion, Telefono)
+        VALUES (p_id_proveedor, p_nombre, p_direccion, p_telefono);
+    END InsertarProveedor;
+
+    PROCEDURE ActualizarProveedor(
+        p_id_proveedor NUMBER,
+        p_nombre VARCHAR2,
+        p_direccion VARCHAR2,
+        p_telefono VARCHAR2
+    ) IS
+    BEGIN
+        UPDATE Proveedores
+        SET Nombre = p_nombre, Direccion = p_direccion, Telefono = p_telefono
+        WHERE ID_Proveedor = p_id_proveedor;
+    END ActualizarProveedor;
+
+    PROCEDURE EliminarProveedor(p_id_proveedor NUMBER) IS
+    BEGIN
+        DELETE FROM Proveedores WHERE ID_Proveedor = p_id_proveedor;
+    END EliminarProveedor;
+
+    FUNCTION ObtenerDetalleProveedor(p_id_proveedor NUMBER) RETURN SYS_REFCURSOR IS
+        v_cursor SYS_REFCURSOR;
+    BEGIN
+        OPEN v_cursor FOR
+        SELECT *
+        FROM Proveedores
+        WHERE ID_Proveedor = p_id_proveedor;
+        RETURN v_cursor;
+    END ObtenerDetalleProveedor;
+
+END ProveedorPaquete;
+
+-- Se define el paquete "PapasCrudasPaquete"
+
+CREATE OR REPLACE PACKAGE PapasCrudasPaquete AS
+
+    PROCEDURE InsertarPapasCrudas(
+        p_id_papas_crudas NUMBER,
+        p_cantidad NUMBER,
+        p_fecha_ingreso DATE,
+        p_id_proveedor NUMBER
+    );
+
+    PROCEDURE ActualizarPapasCrudas(
+        p_id_papas_crudas NUMBER,
+        p_cantidad NUMBER,
+        p_fecha_ingreso DATE,
+        p_id_proveedor NUMBER
+    );
+
+    PROCEDURE EliminarPapasCrudas(p_id_papas_crudas NUMBER);
+
+    FUNCTION ObtenerDetallePapasCrudas(p_id_papas_crudas NUMBER) RETURN SYS_REFCURSOR;
+END PapasCrudasPaquete;
+
+-- Cuerpo del paquete "PapasCrudasPaquete"
+CREATE OR REPLACE PACKAGE BODY PapasCrudasPaquete AS
+
+    PROCEDURE InsertarPapasCrudas(
+        p_id_papas_crudas NUMBER,
+        p_cantidad NUMBER,
+        p_fecha_ingreso DATE,
+        p_id_proveedor NUMBER
+    ) IS
+    BEGIN
+        INSERT INTO PapasCrudas (ID_Papas_Crudas, Cantidad, Fecha_Ingreso, ID_Proveedor)
+        VALUES (p_id_papas_crudas, p_cantidad, p_fecha_ingreso, p_id_proveedor);
+    END InsertarPapasCrudas;
+
+    PROCEDURE ActualizarPapasCrudas(
+        p_id_papas_crudas NUMBER,
+        p_cantidad NUMBER,
+        p_fecha_ingreso DATE,
+        p_id_proveedor NUMBER
+    ) IS
+    BEGIN
+        UPDATE PapasCrudas
+        SET Cantidad = p_cantidad, Fecha_Ingreso = p_fecha_ingreso, ID_Proveedor = p_id_proveedor
+        WHERE ID_Papas_Crudas = p_id_papas_crudas;
+    END ActualizarPapasCrudas;
+
+    PROCEDURE EliminarPapasCrudas(p_id_papas_crudas NUMBER) IS
+    BEGIN
+        DELETE FROM PapasCrudas WHERE ID_Papas_Crudas = p_id_papas_crudas;
+    END EliminarPapasCrudas;
+
+    FUNCTION ObtenerDetallePapasCrudas(p_id_papas_crudas NUMBER) RETURN SYS_REFCURSOR IS
+        v_cursor SYS_REFCURSOR;
+    BEGIN
+        OPEN v_cursor FOR
+        SELECT *
+        FROM PapasCrudas
+        WHERE ID_Papas_Crudas = p_id_papas_crudas;
+        RETURN v_cursor;
+    END ObtenerDetallePapasCrudas;
+
+END PapasCrudasPaquete;
+
+-- Se define el paquete "PapasFritasPaquete"
+CREATE OR REPLACE PACKAGE PapasFritasPaquete AS
+
+    PROCEDURE InsertarPapasFritas(
+        p_id_papas_fritas NUMBER,
+        p_cantidad NUMBER,
+        p_fecha_produccion DATE,
+        p_id_papas_crudas NUMBER
+    );
+
+    PROCEDURE ActualizarPapasFritas(
+        p_id_papas_fritas NUMBER,
+        p_cantidad NUMBER,
+        p_fecha_produccion DATE,
+        p_id_papas_crudas NUMBER
+    );
+
+    PROCEDURE EliminarPapasFritas(p_id_papas_fritas NUMBER);
+
+
+    FUNCTION ObtenerDetallePapasFritas(p_id_papas_fritas NUMBER) RETURN SYS_REFCURSOR;
+END PapasFritasPaquete;
+
+-- Cuerpo del paquete "PapasFritasPaquete"
+CREATE OR REPLACE PACKAGE BODY PapasFritasPaquete AS
+
+    PROCEDURE InsertarPapasFritas(
+        p_id_papas_fritas NUMBER,
+        p_cantidad NUMBER,
+        p_fecha_produccion DATE,
+        p_id_papas_crudas NUMBER
+    ) IS
+    BEGIN
+        INSERT INTO PapasFritas (ID_Papas_Fritas, Cantidad, Fecha_Produccion, ID_Papas_Crudas)
+        VALUES (p_id_papas_fritas, p_cantidad, p_fecha_produccion, p_id_papas_crudas);
+    END InsertarPapasFritas;
+
+    PROCEDURE ActualizarPapasFritas(
+        p_id_papas_fritas NUMBER,
+        p_cantidad NUMBER,
+        p_fecha_produccion DATE,
+        p_id_papas_crudas NUMBER
+    ) IS
+    BEGIN
+        UPDATE PapasFritas
+        SET Cantidad = p_cantidad, Fecha_Produccion = p_fecha_produccion, ID_Papas_Crudas = p_id_papas_crudas
+        WHERE ID_Papas_Fritas = p_id_papas_fritas;
+    END ActualizarPapasFritas;
+
+    PROCEDURE EliminarPapasFritas(p_id_papas_fritas NUMBER) IS
+    BEGIN
+        DELETE FROM PapasFritas WHERE ID_Papas_Fritas = p_id_papas_fritas;
+    END EliminarPapasFritas;
+
+    FUNCTION ObtenerDetallePapasFritas(p_id_papas_fritas NUMBER) RETURN SYS_REFCURSOR IS
+        v_cursor SYS_REFCURSOR;
+    BEGIN
+        OPEN v_cursor FOR
+        SELECT *
+        FROM PapasFritas
+        WHERE ID_Papas_Fritas = p_id_papas_fritas;
+        RETURN v_cursor;
+    END ObtenerDetallePapasFritas;
+
+END PapasFritasPaquete;
+
 -- /////////////////////////////////////////////////////////////////////////////C
 /* c) Creación de Inserciones, Borrados y actualización de datos con
 Procedimientos almacenados o funciones. – CRUD (Relacione con los
