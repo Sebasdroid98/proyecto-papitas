@@ -25,7 +25,9 @@ class EmpleadoRequest extends FormRequest
             'emp_id' => 'required|numeric|unique:empleados',
             'nombre' => 'required|string|max:100',
             'cargo' => 'required|string|max:50',
-            'salario' => 'required|numeric'
+            'salario' => 'required|numeric',
+            'email' => 'required|email|unique:users',
+            'password' => 'required|string|min:8',
         ];
     }
 
@@ -39,6 +41,11 @@ class EmpleadoRequest extends FormRequest
             'salario.numeric' => 'El salario debe ser un valor numérico.',
             'nombre.required' => 'El nombre es obligatorio.',
             'cargo.required' => 'El cargo es obligatorio.',
+            'email.required' => 'El campo E-mail es obligatorio.',
+            'email.email' => 'El campo E-mail debe ser de tipo texto.',
+            'email.unique' => 'El E-mail suministrado ya esta registrado.',
+            'password.required' => 'El campo Contraseña es obligatorio.',
+            'password.min' => 'El campo Contraseña debe ser minimo de 8 caracteres.',
         ];
     }
 }

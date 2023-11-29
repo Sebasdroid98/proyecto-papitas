@@ -5,6 +5,10 @@
         </h2>
     </x-slot>
 
+    @php
+        $cargo = 'Operario';
+    @endphp
+
     <div class="py-12 px-12">
         <div class="flex">
             <div class="w-3/4 p-4">
@@ -21,10 +25,17 @@
                         </thead>
                         <tbody>
                             @forelse ($listaEmpleados as $empleado)
+                                @php
+                                    if ($empleado->cargo == '2') {
+                                        $cargo = 'Operario';
+                                    }else{
+                                        $cargo = 'Supervisor';
+                                    }
+                                @endphp
                                 <tr>
                                     <td class="px-4 py-2 ">{{ $empleado->emp_id }}</td>
                                     <td class="px-4 py-2 ">{{ $empleado->nombre }}</td>
-                                    <td class="px-4 py-2 ">{{ $empleado->cargo }}</td>
+                                    <td class="px-4 py-2 ">{{ $cargo }}</td>
                                     <td class="px-4 py-2 ">{{ $empleado->salario }}</td>
                                     <td class="px-4 py-2 ">
                                         <a
@@ -69,7 +80,14 @@
                                 </div>
                                 <div class=" leading-6">
                                     <x-input-label value="Cargo" />
-                                    <x-text-input class="w-full" name="cargo" maxlength="50" value="{{ $infoEmpleado->cargo }}" required/>
+                                    <select  class="w-full" name="cargo" id="" required>
+                                        <option value="">Seleccione</option>
+                                        @forelse ($listaCargos as $cargo)
+                                            <option value="{{ $cargo['id'] }}" @if ($infoEmpleado->cargo == $cargo['id']) selected @endif>{{ $cargo['nombre'] }}</option>
+                                        @empty
+
+                                        @endforelse
+                                    </select>
                                     @error('cargo')
                                         <small class="text-sm font-semibold text-red-600 mb-4">{{ $message }}</small>
                                     @enderror
@@ -112,8 +130,15 @@
                                 </div>
                                 <div class=" leading-6">
                                     <x-input-label value="Cargo" />
-                                    <x-text-input class="w-full" name="cargo" maxlength="50" value="{{ old('cargo') }}" required/>
-                                    @error('cargo')
+                                    <select  class="w-full" name="cargo" id="" required>
+                                        <option value="">Seleccione</option>
+                                        @forelse ($listaCargos as $cargo)
+                                            <option value="{{ $cargo['id'] }}">{{ $cargo['nombre'] }}</option>
+                                        @empty
+
+                                        @endforelse
+                                    </select>
+                                    @error('emp_id')
                                         <small class="text-sm font-semibold text-red-600 mb-4">{{ $message }}</small>
                                     @enderror
                                 </div>
@@ -121,6 +146,20 @@
                                     <x-input-label value="Salario" />
                                     <x-text-input type="number" class="w-full" name="salario" max="999999999" step="0.01" value="{{ old('salario') }}" required/>
                                     @error('salario')
+                                        <small class="text-sm font-semibold text-red-600 mb-4">{{ $message }}</small>
+                                    @enderror
+                                </div>
+                                <div class=" leading-6">
+                                    <x-input-label value="E-mail" />
+                                    <x-text-input class="w-full" type="email" name="email" maxlength="100" value="{{ old('email') }}" required/>
+                                    @error('email')
+                                        <small class="text-sm font-semibold text-red-600 mb-4">{{ $message }}</small>
+                                    @enderror
+                                </div>
+                                <div class=" leading-6">
+                                    <x-input-label value="Contraseña" />
+                                    <x-text-input class="w-full" type="password" name="password" maxlength="100" value="{{ old('password') }}" required/>
+                                    @error('password')
                                         <small class="text-sm font-semibold text-red-600 mb-4">{{ $message }}</small>
                                     @enderror
                                 </div>

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Custom\Queries\Empleado;
+use App\Custom\Queries\Usuarios;
 use App\Http\Requests\EmpleadoRequest;
 use App\Http\Requests\EmpleadoUpdateRequest;
 use Illuminate\Http\Request;
@@ -22,7 +23,8 @@ class EmpleadoController extends Controller
      */
     public function index() {
         $listaEmpleados = $this->empleadoQuery->getListaEmpleados();
-        return view('secciones-app.empleados.empleado-index', ['listaEmpleados' => $listaEmpleados]);
+        $listaCargos = [['id' => '1','nombre'=> 'Supervisor'],['id' => '2','nombre'=> 'Operario']];
+        return view('secciones-app.empleados.empleado-index', ['listaEmpleados' => $listaEmpleados, 'listaCargos' => $listaCargos]);
     }
 
     public function edit(Int $id) {
@@ -39,10 +41,14 @@ class EmpleadoController extends Controller
      * @return View
      */
     public function store(EmpleadoRequest $request){
-        $datosFormulario = $request->except('_token');
+        $datosCredenciales = $request->only('cargo','nombre','email','password');
+        // dd($datosCredenciales);
+        $datosFormulario = $request->except('_token','email','password');
+        // dd($datosFormulario);
         $resultado = $this->empleadoQuery->createEmpleado($datosFormulario);
 
         if ($resultado['process']) {
+            (new Usuarios)->createUser($datosCredenciales);
             return redirect()->route('empleados.index')->with('success', 'Empleado agregado exitosamente.');
         }
 

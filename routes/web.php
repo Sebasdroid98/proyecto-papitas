@@ -34,11 +34,13 @@ Route::middleware('auth')->group(function () {
 // });
 
 Route::controller(EmpleadoController::class)->group(function () {
-    Route::get('empleados.index', 'index')->name('empleados.index');
-    Route::get('empleados.edit/{id}', 'edit');
-    // Route::get('empleados.delete/{id}', 'delete');
-    Route::put('empleados.update/{id}', 'update')->name('empleados.update');
-    Route::post('empleados.store', 'store')->name('empleados.store');
+    Route::middleware(['can:ver-empleados'])->group(function () {
+        Route::get('empleados.index', 'index')->name('empleados.index');
+        Route::get('empleados.edit/{id}', 'edit');
+        // Route::get('empleados.delete/{id}', 'delete');
+        Route::put('empleados.update/{id}', 'update')->name('empleados.update');
+        Route::post('empleados.store', 'store')->name('empleados.store');
+    });
 });
 
 Route::controller(TareaController::class)->group(function () {

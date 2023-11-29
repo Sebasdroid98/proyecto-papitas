@@ -1,10 +1,12 @@
 @php
     $modulos = [
-        ['title' => 'Gestión de empleados', 'info' => 'Gestiona la información de los empleados', 'url' => 'empleados.index'],
-        ['title' => 'Gestión de tareas', 'info' => 'Gestiona la información de las tareas', 'url' => 'tareas.index'],
-        ['title' => 'Gestión de clientes', 'info' => 'Gestiona la información de los clientes', 'url' => 'clientes.index'],
-        ['title' => 'Gestión de ventas', 'info' => 'Gestiona la información de las ventas', 'url' => 'ventas.index'],
+        ['title' => 'Gestión de empleados', 'info' => 'Gestiona la información de los empleados', 'url' => 'empleados.index','rol'=>[1]],
+        ['title' => 'Gestión de tareas', 'info' => 'Gestiona la información de las tareas', 'url' => 'tareas.index','rol'=>[1,2]],
+        ['title' => 'Gestión de clientes', 'info' => 'Gestiona la información de los clientes', 'url' => 'clientes.index','rol'=>[1,2]],
+        ['title' => 'Gestión de ventas', 'info' => 'Gestiona la información de las ventas', 'url' => 'ventas.index','rol'=>[1,2]],
     ];
+
+    $rolUser = Auth::user()->rol;
 @endphp
 <x-app-layout>
     <x-slot name="header">
@@ -12,6 +14,7 @@
             {{ __('Dashboard') }}
         </h2>
     </x-slot>
+    {{-- @dump($rolUser) --}}
 
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
@@ -25,6 +28,7 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <ul role="list" class="divide-y divide-gray-100">
                 @forelse ($modulos as $modulo)
+                    @continue(!in_array($rolUser, $modulo['rol']))
                     <li class="flex justify-between gap-x-6 py-5 mt-2 bg-white p-6 shadow-sm sm:rounded-lg">
                         <div class="min-w-0 gap-x-4">
                             <p>{{ $modulo['title'] }}</p>

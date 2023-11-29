@@ -6,6 +6,7 @@ use App\Custom\Queries\Empleado;
 use App\Custom\Queries\Tareas;
 use App\Http\Requests\TareaRequest;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class TareaController extends Controller
 {
@@ -20,7 +21,15 @@ class TareaController extends Controller
      * Función para mostrar el listado de empleados registrados
      */
     public function index() {
-        $listaTareas = $this->tareasQuery->getListaTareas();
+
+        if (Auth::user()->rol == '2') {
+            $empID = Auth::user()->empid;
+            // dd(Auth::user());
+            $listaTareas = $this->tareasQuery->getListaTareasEmpleado($empID);
+        }else{
+            $listaTareas = $this->tareasQuery->getListaTareas();
+        }
+
         $listaEmpleados = (new Empleado)->getListaEmpleados();
         return view('secciones-app.tareas.tarea-index', ['listaTareas' => $listaTareas, 'listaEpleados' => $listaEmpleados]);
     }

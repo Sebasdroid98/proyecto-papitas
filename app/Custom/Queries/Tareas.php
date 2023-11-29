@@ -15,6 +15,13 @@ class Tareas
     }
 
     /**
+     * Query para consultar todos los registros de la tabla tareas
+     */
+    public function getListaTareasEmpleado(Int $empleadoId) {
+        return DB::select("SELECT * FROM TAREAS TR INNER JOIN EMPLEADOS EM ON TR.EMP_ID = EM.EMP_ID WHERE TR.EMP_ID = $empleadoId ORDER BY TAREA_ID DESC");
+    }
+
+    /**
      * Query para interactuar con el paquete "TAREAS_CRUD_PKG" y el procedimiento "CrearTarea"
      * @param Array $datos
      */
