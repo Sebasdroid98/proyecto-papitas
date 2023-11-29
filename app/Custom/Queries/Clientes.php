@@ -5,27 +5,26 @@ namespace App\Custom\Queries;
 use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\DB;
 
-class Tareas
+class Clientes
 {
     /**
-     * Query para consultar todos los registros de la tabla tareas
+     * Query para consultar todos los registros de la tabla clientes
      */
-    public function getListaTareas() {
-        return DB::select("SELECT * FROM TAREAS TR INNER JOIN EMPLEADOS EM ON TR.EMP_ID = EM.EMP_ID  ORDER BY TAREA_ID DESC");
+    public function getListaClientes() {
+        return DB::select("SELECT * FROM CLIENTES ORDER BY CLIENTE_ID DESC");
     }
 
     /**
-     * Query para interactuar con el paquete "TAREAS_CRUD_PKG" y el procedimiento "CrearTarea"
+     * Query para interactuar con el paquete "CLIENTES_CRUD_PKG" y el procedimiento "CrearCliente"
      * @param Array $datos
      */
-    public function createTarea(Array $datos) : Array{
+    public function createCliente(Array $datos) : Array{
         $rto = ['process' => false, 'message' => 'sin errores'];
         try{
-            DB::statement('BEGIN TAREAS_CRUD_PKG.CrearTarea(:p_Tarea_Id, :p_Descripcion, :p_Fecha_Asignacion, :p_Emp_Id); END;', [
-                'p_Tarea_Id'            => $datos['tarea_id'],
-                'p_Descripcion'         => $datos['descripcion'],
-                'p_Fecha_Asignacion'    => $datos['fecha_asignacion'],
-                'p_Emp_Id'              => $datos['emp_id'],
+            DB::statement('BEGIN CLIENTES_CRUD_PKG.CrearCliente(:p_Cliente_Id, :p_Nombre, :p_Direccion); END;', [
+                'p_Cliente_Id'  => $datos['cliente_id'],
+                'p_Nombre'      => $datos['nombre'],
+                'p_Direccion'   => $datos['direccion'],
             ]);
 
             $rto['process'] = true;

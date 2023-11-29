@@ -1,8 +1,11 @@
 <?php
 
 use App\Custom\Queries\Empleado;
+use App\Http\Controllers\ClienteController;
 use App\Http\Controllers\EmpleadoController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\TareaController;
+use App\Http\Controllers\VentaController;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 
@@ -36,6 +39,21 @@ Route::controller(EmpleadoController::class)->group(function () {
     // Route::get('empleados.delete/{id}', 'delete');
     Route::put('empleados.update/{id}', 'update')->name('empleados.update');
     Route::post('empleados.store', 'store')->name('empleados.store');
+});
+
+Route::controller(TareaController::class)->group(function () {
+    Route::get('tareas.index', 'index')->name('tareas.index');
+    Route::post('tareas.store', 'store')->name('tareas.store');
+});
+
+Route::controller(ClienteController::class)->group(function () {
+    Route::get('clientes.index', 'index')->name('clientes.index');
+    Route::post('clientes.store', 'store')->name('clientes.store');
+});
+
+Route::controller(VentaController::class)->group(function () {
+    Route::get('ventas.index', 'index')->name('ventas.index');
+    Route::post('ventas.store', 'store')->name('ventas.store');
 });
 
 require __DIR__.'/auth.php';

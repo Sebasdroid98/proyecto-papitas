@@ -1,6 +1,9 @@
 @php
     $modulos = [
-        ['title' => 'Gestión de empleados', 'info' => 'Gestiona la información de los empleados', 'url' => 'empleados.index']
+        ['title' => 'Gestión de empleados', 'info' => 'Gestiona la información de los empleados', 'url' => 'empleados.index'],
+        ['title' => 'Gestión de tareas', 'info' => 'Gestiona la información de las tareas', 'url' => 'tareas.index'],
+        ['title' => 'Gestión de clientes', 'info' => 'Gestiona la información de los clientes', 'url' => 'clientes.index'],
+        ['title' => 'Gestión de ventas', 'info' => 'Gestiona la información de las ventas', 'url' => 'ventas.index'],
     ];
 @endphp
 <x-app-layout>
